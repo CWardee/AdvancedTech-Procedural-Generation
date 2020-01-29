@@ -7,6 +7,7 @@ public class CursorHover : MonoBehaviour
     Ray ray;
     RaycastHit hit;
     ParticleSystem rockParticles;
+    DestroyObject thisObjectsDestroyScript;
 
 
     void OnMouseOver()
@@ -33,12 +34,10 @@ public class CursorHover : MonoBehaviour
                 print(hit.collider.name);
                 if (hit.transform.tag == "Rock")
                 {
-                    rockParticles = hit.collider.gameObject.GetComponent<ParticleSystem>();
-                    rockParticles.Play();
-                    // hit.collider.gameObject.GetComponent<ParticleSystem>().Play();
-                    //hit.collider.gameObject.GetComponent<ParticleSystem>().Play();
+                    thisObjectsDestroyScript = hit.collider.gameObject.GetComponent<DestroyObject>();
+                    thisObjectsDestroyScript.DestroyThisObject = true;
 
-                    Destroy(hit.collider.gameObject);
+                    //Destroy(hit.collider.gameObject);
                 }
 
                 if (hit.transform.tag == "Tree")

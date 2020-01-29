@@ -11,7 +11,7 @@ public class ProceduralGeneration : MonoBehaviour
 
 
     private int maxBlocksPerCell = 100;
-    private float maxCells = 6;
+    public float maxCells = 6;
     public float currentRow = 0;
     public float maxRows = 6;
 

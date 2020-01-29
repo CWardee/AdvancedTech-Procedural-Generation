@@ -65,6 +65,7 @@
     <Compile Include="Assets\CameraControls.cs" />
     <Compile Include="Assets\CursorHover.cs" />
     <Compile Include="Assets\CustomCursor.cs" />
+    <Compile Include="Assets\DestroyObject.cs" />
     <Compile Include="Assets\ProceduralGeneration.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/AdvancedTech-Procedural-Generation/Procedural Generation/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
