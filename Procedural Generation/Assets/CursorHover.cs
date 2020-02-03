@@ -9,6 +9,8 @@ public class CursorHover : MonoBehaviour
     ParticleSystem rockParticles;
     DestroyObject thisObjectsDestroyScript;
 
+    public ParticleSystem particlesToPlay;
+
 
     void OnMouseOver()
     {
@@ -32,18 +34,15 @@ public class CursorHover : MonoBehaviour
             {
 
                 print(hit.collider.name);
-                if (hit.transform.tag == "Rock")
-                {
-                    thisObjectsDestroyScript = hit.collider.gameObject.GetComponent<DestroyObject>();
-                    thisObjectsDestroyScript.DestroyThisObject = true;
 
-                    //Destroy(hit.collider.gameObject);
-                }
 
-                if (hit.transform.tag == "Tree")
-                {
+                    particlesToPlay.transform.position = new Vector3(hit.collider.gameObject.transform.position.x,
+                                        hit.collider.gameObject.transform.position.y,
+                                        hit.collider.gameObject.transform.position.z);
+                    particlesToPlay.Play();
+
                     Destroy(hit.collider.gameObject);
-                }
+
 
             }
             }

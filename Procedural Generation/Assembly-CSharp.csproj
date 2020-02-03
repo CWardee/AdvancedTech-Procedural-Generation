@@ -62,9 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BlockProperties.cs" />
     <Compile Include="Assets\CameraControls.cs" />
     <Compile Include="Assets\CursorHover.cs" />
     <Compile Include="Assets\CustomCursor.cs" />
+    <Compile Include="Assets\DayNightCycle.cs" />
     <Compile Include="Assets\DestroyObject.cs" />
     <Compile Include="Assets\ProceduralGeneration.cs" />
     <Reference Include="Unity.Timeline.Editor">

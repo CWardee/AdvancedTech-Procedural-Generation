@@ -8,13 +8,15 @@ public class ProceduralGeneration : MonoBehaviour
 
     private bool SelectNewBiome = true;
 
-
+    BlockProperties currentBlockproperties;
 
     private int maxBlocksPerCell = 100;
     public float maxCells = 6;
     public float currentRow = 0;
     public float maxRows = 6;
 
+    public int MaxHeight = 8;
+    public int currentHeight = -1;
     public bool Grassland = true;
     public bool MudLand = false;
     public bool Forest = false;
@@ -22,13 +24,17 @@ public class ProceduralGeneration : MonoBehaviour
 
     public int i = 0;
     public int currentCell = 0;
-    public float maxHeight = 0;
+    public float maxHeightOffset = 0.2f;
     public float depthPos = 0;
     public float defaultDepthPos = 0;
     public float defaultWidthPos = 0;
     public float widthPos = 0;
     public bool cellSpawned = false;
 
+    public GameObject UnderGround_Rock_block1;
+    public GameObject UnderGround_Rock_block2;
+    public GameObject UnderGround_Rock_block3;
+    public GameObject UnderGround_Rock_block4;
 
     public GameObject Grassland_block1;
     public GameObject Grassland_block2;
@@ -54,8 +60,35 @@ public class ProceduralGeneration : MonoBehaviour
 
     public GameObject[] CurrentBlock;
 
+    MeshFilter[] meshFilters;
 
 
+    private int BlockCell = 1;
+    private List<GameObject> gameObjectsToCombine = new List<GameObject>();
+
+    public void CombineMeshes(GameObject obj)
+    {
+        Vector3 position = obj.transform.position;
+        obj.transform.position = Vector3.zero;
+
+        MeshFilter[] meshFilters = obj.GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+        int p = 1;
+        while (p < meshFilters.Length)
+        {
+            combine[p].mesh = meshFilters[p].sharedMesh;
+            combine[p].transform = meshFilters[p].transform.localToWorldMatrix;
+            meshFilters[p].gameObject.SetActive(false);
+            p++;
+        }
+
+        obj.transform.GetComponent<MeshFilter>().mesh = new Mesh();
+        obj.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine, true, true);
+        obj.transform.gameObject.SetActive(true);
+
+        obj.transform.position = position;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -194,7 +227,8 @@ public class ProceduralGeneration : MonoBehaviour
 
                 }
 
-     
+                currentBlockproperties = CurrentBlock[i].gameObject.GetComponent<BlockProperties>();
+                currentBlockproperties.blockCellLocation = BlockCell;
 
                 if (i % 10 == 0)
                 {
@@ -202,8 +236,50 @@ public class ProceduralGeneration : MonoBehaviour
                     widthPos = defaultWidthPos;
                 }
 
+                float heightToUse = Random.Range(0, maxHeightOffset);
 
-                GameObject test = Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), Random.Range(0, maxHeight), depthPos), Quaternion.identity);
+                GameObject test = Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse, depthPos), Quaternion.identity);
+                currentHeight = -1;
+
+                meshFilters = CurrentBlock[i].gameObject.GetComponentsInChildren<MeshFilter>();
+
+
+
+
+                for (int y = 0; y < MaxHeight; y++)
+                {
+                    float j = Random.Range(0.0f, 10.0f);
+                    {
+
+                        if (j < 1)
+                        {
+                            CurrentBlock[i] = UnderGround_Rock_block1;
+                        }
+
+                        else if (j < 2)
+                        {
+                            CurrentBlock[i] = UnderGround_Rock_block2;
+                        }
+
+                        else if (j < 3)
+                        {
+                            CurrentBlock[i] = UnderGround_Rock_block3;
+                        }
+
+                        else
+                        {
+                            CurrentBlock[i] = UnderGround_Rock_block4;
+                        }
+                    }
+
+
+
+                    Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse+currentHeight--, depthPos), Quaternion.identity);
+                    y++;
+                }
+
+                
+
                 test.name = i.ToString();
                 widthPos++;
             }
@@ -215,8 +291,12 @@ public class ProceduralGeneration : MonoBehaviour
 
             if (i == maxBlocksPerCell)
             {
+
+
+                BlockCell++;
                 currentCell++;
                 SelectNewBiome = true;
+                i = 0;
 
                 if (currentCell == maxCells)
                 {

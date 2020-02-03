@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Rock
   - Tree
+  - CameraController
   layers:
   - Default
   - TransparentFX
