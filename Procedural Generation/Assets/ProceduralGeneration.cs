@@ -269,6 +269,7 @@ public class ProceduralGeneration : MonoBehaviour
                         else
                         {
                             CurrentBlock[i] = UnderGround_Rock_block4;
+                            CurrentBlock[i].gameObject.tag = "BedRock";
                         }
                     }
 
