@@ -19,7 +19,7 @@ public class MeshCombine : MonoBehaviour
 
     }
 
-    void CombineMeshes()
+    public void CombineMeshes()
     {
         fired = true;
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
@@ -39,35 +39,28 @@ public class MeshCombine : MonoBehaviour
         transform.gameObject.SetActive(true);
     }
 
-    IEnumerator ExecuteAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        CombineMeshes();
-
-        // Code to execute after the delay
-    }
 
     void Update()
     {
         //rocksObjects = GameObject.FindGameObjectsWithTag("BedRock");
 
-        var rocksObjects = GameObject.FindGameObjectsWithTag("BedRock");
+        //var rocksObjects = GameObject.FindGameObjectsWithTag("BedRock");
 
-        for (int i = 0; i < rocksObjects.Length; i++)
-        {
-            rocksObjects[i].transform.parent = this.gameObject.transform;
-        }
-
-
-
-        if (rocksObjects.Length > 9000)
-        { 
-            Debug.Log("No game objects are tagged with 'BedRock'");
-            CombineMeshes();
-        }
+        //for (int i = 0; i < rocksObjects.Length; i++)
+        //{
+        //    rocksObjects[i].transform.parent = this.gameObject.transform;
+        //}
 
 
-        length = rocksObjects.Length;
+
+        //if (rocksObjects.Length > 9000)
+        //{ 
+        //    Debug.Log("No game objects are tagged with 'BedRock'");
+        //    CombineMeshes();
+        //}
+
+
+        //length = rocksObjects.Length;
 
     }
 

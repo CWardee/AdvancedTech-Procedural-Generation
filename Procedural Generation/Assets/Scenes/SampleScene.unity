@@ -5631,6 +5631,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.0000001}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &671932014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 671932015}
+  m_Layer: 0
+  m_Name: Cell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &671932015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671932014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &699899625
 GameObject:
   m_ObjectHideFlags: 0
@@ -5660,15 +5690,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c47b12bda7dbb4fb26e4752bff9d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  underGroundRock_Combine: {fileID: 1842160246}
+  underGroundRock_Object: {fileID: 1842160245}
   currentRandomNumber: 0
   maxCells: 4
   currentRow: 0
   maxRows: 4
-  MaxHeight: 12
+  MaxHeight: 4
   currentHeight: -1
-  Grassland: 1
-  MudLand: 0
-  Forest: 0
   i: 0
   currentCell: 0
   maxHeightOffset: 0.2
@@ -5677,6 +5706,9 @@ MonoBehaviour:
   defaultWidthPos: 0
   widthPos: 0
   cellSpawned: 0
+  Grassland: 1
+  MudLand: 0
+  Forest: 0
   UnderGround_Rock_block1: {fileID: 2056675575}
   UnderGround_Rock_block2: {fileID: 1033716805}
   UnderGround_Rock_block3: {fileID: 2056675575}
@@ -5920,7 +5952,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 4
+  near clip plane: 1
   far clip plane: 50
   field of view: 60
   orthographic: 0

@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class ProceduralGeneration : MonoBehaviour
 {
-    public float currentRandomNumber;
-
-    private bool SelectNewBiome = true;
-
+    //OTHER
     BlockProperties currentBlockproperties;
+    public MeshCombine underGroundRock_Combine;
+    public GameObject underGroundRock_Object;
 
-    private int maxBlocksPerCell = 100;
+    //FLOATS
+    public float currentRandomNumber;
     public float maxCells = 6;
     public float currentRow = 0;
     public float maxRows = 6;
 
+    //INTS
+    private int maxBlocksPerCell = 100;
     public int MaxHeight = 8;
     public int currentHeight = -1;
-    public bool Grassland = true;
-    public bool MudLand = false;
-    public bool Forest = false;
-
-
     public int i = 0;
     public int currentCell = 0;
     public float maxHeightOffset = 0.2f;
@@ -31,64 +28,49 @@ public class ProceduralGeneration : MonoBehaviour
     public float widthPos = 0;
     public bool cellSpawned = false;
 
+    //BOOLS
+    private bool SelectNewBiome = true;
+    public bool Grassland = true;
+    public bool MudLand = false;
+    public bool Forest = false;
+
+    //UNDERGROUND=======================================
     public GameObject UnderGround_Rock_block1;
     public GameObject UnderGround_Rock_block2;
     public GameObject UnderGround_Rock_block3;
     public GameObject UnderGround_Rock_block4;
 
+    //GRASSLAND=======================================
     public GameObject Grassland_block1;
     public GameObject Grassland_block2;
     public GameObject Grassland_block3;
     public GameObject Grassland_block4;
     public GameObject Grassland_block5;
 
-
-
+    //MUDLAND=======================================
     public GameObject MudLand_block1;
     public GameObject MudLand_block2;
     public GameObject MudLand_block3;
     public GameObject MudLand_block4;
     public GameObject MudLand_block5;
 
-
-
+    //FOREST=======================================
     public GameObject Forest_block1;
     public GameObject Forest_block2;
     public GameObject Forest_block3;
     public GameObject Forest_block4;
     public GameObject Forest_block5;
 
+    //CURRENTBLOCK
     public GameObject[] CurrentBlock;
 
+    //MESHFILTER
     MeshFilter[] meshFilters;
 
-
+    //OTHER
     private int BlockCell = 1;
     private List<GameObject> gameObjectsToCombine = new List<GameObject>();
 
-    public void CombineMeshes(GameObject obj)
-    {
-        Vector3 position = obj.transform.position;
-        obj.transform.position = Vector3.zero;
-
-        MeshFilter[] meshFilters = obj.GetComponentsInChildren<MeshFilter>();
-        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
-
-        int p = 1;
-        while (p < meshFilters.Length)
-        {
-            combine[p].mesh = meshFilters[p].sharedMesh;
-            combine[p].transform = meshFilters[p].transform.localToWorldMatrix;
-            meshFilters[p].gameObject.SetActive(false);
-            p++;
-        }
-
-        obj.transform.GetComponent<MeshFilter>().mesh = new Mesh();
-        obj.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine, true, true);
-        obj.transform.gameObject.SetActive(true);
-
-        obj.transform.position = position;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -101,8 +83,14 @@ public class ProceduralGeneration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var rocksObjects = GameObject.FindGameObjectsWithTag("BedRock");
+        for (int f = 0; f < rocksObjects.Length; f++)
+        {
+            rocksObjects[f].transform.parent = underGroundRock_Object.gameObject.transform;
+        }
+
         //spawn cell
-        if(!cellSpawned)
+        if (!cellSpawned)
         {
             for (i = 0; (i < maxBlocksPerCell) && (currentRow != maxRows); i++)
             {
@@ -274,7 +262,6 @@ public class ProceduralGeneration : MonoBehaviour
                     }
 
 
-
                     Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse+currentHeight--, depthPos), Quaternion.identity);
                     y++;
                 }
@@ -288,11 +275,11 @@ public class ProceduralGeneration : MonoBehaviour
             if (currentRow == maxRows)
             {
                 cellSpawned = true;
+                underGroundRock_Combine.CombineMeshes();
             }
 
             if (i == maxBlocksPerCell)
             {
-
 
                 BlockCell++;
                 currentCell++;
@@ -309,6 +296,7 @@ public class ProceduralGeneration : MonoBehaviour
                 }
             }
         }
+
 
     }
 }
