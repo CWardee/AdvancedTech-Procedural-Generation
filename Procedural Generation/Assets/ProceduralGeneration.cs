@@ -9,6 +9,9 @@ public class ProceduralGeneration : MonoBehaviour
     public MeshCombine underGroundRock_Combine;
     public GameObject underGroundRock_Object;
 
+    public bool loadGame = true;
+
+
     //FLOATS
     public float currentRandomNumber;
     public float maxCells = 6;
@@ -72,6 +75,20 @@ public class ProceduralGeneration : MonoBehaviour
     private List<GameObject> gameObjectsToCombine = new List<GameObject>();
 
 
+    public int total = 0;
+
+
+
+
+
+
+    public bool GenerateNewWorld = false;
+    public GameSave Saving;
+
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +105,7 @@ public class ProceduralGeneration : MonoBehaviour
         {
             rocksObjects[f].transform.parent = underGroundRock_Object.gameObject.transform;
         }
+
 
         //spawn cell
         if (!cellSpawned)
@@ -229,6 +247,8 @@ public class ProceduralGeneration : MonoBehaviour
                 GameObject test = Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse, depthPos), Quaternion.identity);
                 currentHeight = -1;
 
+                //Saving.blocksToSave[i] = CurrentBlock[i];
+
                 meshFilters = CurrentBlock[i].gameObject.GetComponentsInChildren<MeshFilter>();
 
 
@@ -266,11 +286,11 @@ public class ProceduralGeneration : MonoBehaviour
                     y++;
                 }
 
-                
-
-                test.name = i.ToString();
+                test.name = total.ToString();
+                total++;
                 widthPos++;
             }
+
 
             if (currentRow == maxRows)
             {
@@ -280,11 +300,11 @@ public class ProceduralGeneration : MonoBehaviour
 
             if (i == maxBlocksPerCell)
             {
-
                 BlockCell++;
                 currentCell++;
                 SelectNewBiome = true;
                 i = 0;
+                //total = 10 * currentCell;
 
                 if (currentCell == maxCells)
                 {

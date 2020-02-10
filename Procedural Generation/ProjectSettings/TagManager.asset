@@ -8,6 +8,10 @@ TagManager:
   - Tree
   - CameraController
   - BedRock
+  - Empty
+  - GrassPlain
+  - GrassTall
+  - Dirt
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - ProcedualBlocks
   - 
   - 
   - 
