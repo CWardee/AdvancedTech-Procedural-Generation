@@ -733,9 +733,9 @@ MonoBehaviour:
   underGroundRock_Object: {fileID: 1842160245}
   loadGame: 1
   currentRandomNumber: 0
-  maxCells: 2
+  maxCells: 12
   currentRow: 0
-  maxRows: 2
+  maxRows: 12
   MaxHeight: 4
   currentHeight: -1
   i: 0
@@ -1252,11 +1252,13 @@ MonoBehaviour:
     type: 3}
   grass_Tall: {fileID: 2629273362490727053, guid: 6c10a661a754e1e4da25e195c8067dc1,
     type: 3}
-  grass_Plain_Bool: 0
-  grass_Tall_Bool: 0
+  mud_Plain: {fileID: 0}
+  mud_Grass: {fileID: 0}
   xPos: 0
   yPos: 0
   zPos: 0
+  test: 0
+  CurrentBiome: 
 --- !u!1001 &1085453612
 PrefabInstance:
   m_ObjectHideFlags: 0
