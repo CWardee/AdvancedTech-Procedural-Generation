@@ -21,7 +21,7 @@ public class Block : MonoBehaviour
 
     public void RandomBiome()
     {
-        float x = Random.Range(0.0f, 3.0f);
+        int x = Random.Range(1, 4);
         {
             test = x;
 
@@ -39,7 +39,7 @@ public class Block : MonoBehaviour
 
     public void SetBiome(string biome)
     {
-        GameObject thisBlock;
+        GameObject thisBlock = this.gameObject;
         switch (biome)
         {
             //Grassland
@@ -61,7 +61,7 @@ public class Block : MonoBehaviour
                 break;
 
             //Mudland
-            default:
+            case "Mudland":
                 {
                     float x = Random.Range(0.0f, 3.0f);
                     if (x < 1)
@@ -86,7 +86,7 @@ public class Block : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RandomBiome();
+        //RandomBiome();
         xPos = this.gameObject.transform.position.x;
         yPos = this.gameObject.transform.position.y;
         zPos = this.gameObject.transform.position.z;

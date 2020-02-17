@@ -19,7 +19,7 @@ public class MeshCombine : MonoBehaviour
 
     }
 
-    public void CombineMeshes()
+    public void CombineMeshes(GameObject ParentCell)
     {
         fired = true;
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
@@ -37,6 +37,8 @@ public class MeshCombine : MonoBehaviour
         transform.GetComponent<MeshFilter>().mesh = new Mesh();
         transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
         transform.gameObject.SetActive(true);
+
+        this.gameObject.transform.parent = ParentCell.transform;
     }
 
 

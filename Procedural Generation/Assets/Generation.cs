@@ -8,14 +8,13 @@ public class Generation : MonoBehaviour
     public int TotalColumns = 0;
     public int TotalHeight = 0;
     public int TotalCells;
-    public int CurrentCell = 0;
+    public int CurrentCell = 1;
     bool WorldGenerated = false;
 
     int CurrentRow = 0;
     int CurrentCollum = 0;
 
-    public GameObject BlockToSpawn;
-    public GameObject CellParent;
+    GameObject CellParent;
     Block CurrentBlockScript;
     GameObject[] CellParentArray;
     GameObject[] BlockObjectArray;
@@ -29,56 +28,138 @@ public class Generation : MonoBehaviour
     public GameObject grassPlain;
     public GameObject grassTall;
     public GameObject mudPlain;
-    public GameObject rockPlain;
+    public GameObject mudGrass;
+    public GameObject grassFlowers;
+    public GameObject mudTree;
+    public GameObject rock1;
+    public GameObject rock2;
+
+
+
+    GameObject Cell;
+
+    string CurrentBiome;
+
+    void SetRandomBiomes()
+    {
+        int i = Random.Range(0, 3);
+        switch (i)
+        {
+            case 0:
+                CurrentBiome = "Grassland";
+                break;
+
+            case 1:
+                CurrentBiome = "Mudland";
+                break;
+
+            case 2:
+                CurrentBiome = "Forest";
+                break;
+        }
+    }
+
+
 
     void GenereteBiome(int x)
     {
-        float i = Random.Range(0.0f, 3.0f);
-        if (i < 1)
+        int i = Random.Range(1, 3);
+        if(CurrentBiome == "Grassland")
         {
-            BlockObjectArray[x] = grassPlain;
+            i = Random.Range(1, 3);
+            if (i < 2)
+            {
+                BlockObjectArray[x] = grassPlain;
+            }
+
+            else
+            {
+                BlockObjectArray[x] = grassTall;
+            }
         }
 
-        else
+
+        else if (CurrentBiome == "Mudland")
         {
-            BlockObjectArray[x] = grassTall;
+            i = Random.Range(1, 3);
+            if (i < 2)
+            {
+                BlockObjectArray[x] = mudPlain;
+            }
+
+            else
+            {
+                BlockObjectArray[x] = mudGrass;
+            }
+        }
+
+        else if(CurrentBiome == "Forest")
+        {
+            i = Random.Range(1, 3);
+            if (i < 2)
+            {
+                BlockObjectArray[x] = grassFlowers;
+            }
+
+            else
+            {
+                BlockObjectArray[x] = mudTree;
+            }
         }
     }
+
+  
 
     public void GenerateFreshCell()
     {
         for (int i = 0; i < MaxBlocksPerCell; i++)
         {
-            BlockObjectArray[i] = BlockToSpawn;
             GenereteBiome(i);
-            BlockObjectArray[i].name = i.ToString();
+            float height = Random.Range(0.0f, 0.2f);
 
-            if (i % 10 == 0)
+            if (i % 10 == 0 || i == 0)
             {
                 currentZpos++;
                 currentXpos = 0;
             }
 
-            if (i % 100 == 0)
-            {
-                Instantiate(CellParentArray[CurrentCell], new Vector3(), Quaternion.identity);
-                CellParentArray[CurrentCell].name = "Cell Number: " + CurrentCell;
-            }
 
-            Instantiate(BlockObjectArray[i], new Vector3(currentXpos + (CurrentRow * 10), currentYpos, currentZpos), Quaternion.identity);
+            GameObject Block = Instantiate(BlockObjectArray[i], new Vector3(currentXpos + (CurrentRow * 10), currentYpos + height, currentZpos), Quaternion.identity);
+            Block.transform.parent = Cell.transform;
+            Block.name = "" + CurrentCell;
+
+            //BlockObjectArray[i].name = i.ToString();
+
+
 
             //height
-            for(int x = 0; x < TotalHeight; x++)
+            for (int x = 0; x < TotalHeight; x++)
             {
-                currentYpos++;
-                Instantiate(BlockObjectArray[i], new Vector3(currentXpos + (CurrentRow * 10), currentYpos, currentZpos), Quaternion.identity);
+                currentYpos--;
+                int z = Random.Range(1, 3);
+                if (z < 2)
+                {
+                    BlockObjectArray[i] = rock1;
+                }
+
+                else
+                {
+                    BlockObjectArray[i] = rock2;
+                }
+
+                Block = Instantiate(BlockObjectArray[i], new Vector3(currentXpos + (CurrentRow * 10), currentYpos + height, currentZpos), Quaternion.identity);
+
+
+
+                Block.transform.parent = Cell.transform;
+                Block.name = "Underground" + CurrentCell;
             }
+
 
             currentYpos = 1;
             currentXpos++;
         }
 
-        CurrentCell++;
         WorldGenerated = true;
     }
 
@@ -87,7 +168,7 @@ public class Generation : MonoBehaviour
     {
         TotalCells = TotalRows * TotalColumns;
         BlockObjectArray = new GameObject[MaxBlocksPerCell];
-        CellParentArray = new GameObject[TotalRows * TotalColumns];
+        CellParent = new GameObject();
     }
 
     // Update is called once per frame
@@ -97,13 +178,18 @@ public class Generation : MonoBehaviour
         {
             for (int i = 0; i < TotalRows * TotalColumns; i ++)
             {
-                CellParentArray[i] = CellParent;
                 if (i % TotalRows == 0)
                 {
                     currentZpos = 0;
                     CurrentRow++;
                 }
+
+                Cell = Instantiate(CellParent, new Vector3(), Quaternion.identity);
+                Cell.name = "Cell Number: " + CurrentCell;
+                SetRandomBiomes();
                 GenerateFreshCell();
+                CurrentCell++;
+
             }
         }
     }

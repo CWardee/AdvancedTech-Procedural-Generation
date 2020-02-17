@@ -78,8 +78,8 @@ public class ProceduralGeneration : MonoBehaviour
     public int total = 0;
 
 
-
-
+    GameObject Cell;
+    public int CurrentCell;
 
 
     public bool GenerateNewWorld = false;
@@ -92,6 +92,8 @@ public class ProceduralGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cell = new GameObject();
+        Cell.name = "Cell Number :";
         CurrentBlock = new GameObject[maxBlocksPerCell];
         widthPos = defaultWidthPos;
         depthPos = defaultDepthPos;
@@ -110,6 +112,8 @@ public class ProceduralGeneration : MonoBehaviour
         //spawn cell
         if (!cellSpawned)
         {
+
+
             for (i = 0; (i < maxBlocksPerCell) && (currentRow != maxRows); i++)
             {
                 if(SelectNewBiome)
@@ -247,6 +251,8 @@ public class ProceduralGeneration : MonoBehaviour
                 GameObject test = Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse, depthPos), Quaternion.identity);
                 currentHeight = -1;
 
+                test.transform.parent = Cell.transform;
+
                 //Saving.blocksToSave[i] = CurrentBlock[i];
 
                 meshFilters = CurrentBlock[i].gameObject.GetComponentsInChildren<MeshFilter>();
@@ -282,7 +288,9 @@ public class ProceduralGeneration : MonoBehaviour
                     }
 
 
-                    Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse+currentHeight--, depthPos), Quaternion.identity);
+                    test = Instantiate(CurrentBlock[i], new Vector3(widthPos + (currentRow * 10), heightToUse+currentHeight--, depthPos), Quaternion.identity);
+                    test.transform.parent = Cell.transform;
+
                     y++;
                 }
 
@@ -295,7 +303,7 @@ public class ProceduralGeneration : MonoBehaviour
             if (currentRow == maxRows)
             {
                 cellSpawned = true;
-                underGroundRock_Combine.CombineMeshes();
+                underGroundRock_Combine.CombineMeshes(Cell);
             }
 
             if (i == maxBlocksPerCell)
@@ -314,6 +322,9 @@ public class ProceduralGeneration : MonoBehaviour
                     currentRow++;
                     i = -1;
                 }
+
+                Cell = new GameObject();
+                Cell.name = "Cell Number :";
             }
         }
 
