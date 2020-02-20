@@ -519,9 +519,9 @@ MonoBehaviour:
   underGroundRock_Object: {fileID: 0}
   loadGame: 1
   currentRandomNumber: 0
-  maxCells: 2
+  maxCells: 4
   currentRow: 0
-  maxRows: 2
+  maxRows: 4
   MaxHeight: 4
   currentHeight: -1
   i: 0
@@ -598,6 +598,7 @@ MonoBehaviour:
   TotalHeight: 4
   TotalCells: 0
   CurrentCell: 0
+  currentBlock: 0
   grassPlain: {fileID: 1308909186429059524, guid: 4450b080b9ecd8c4e97ef4aba29f4f7d,
     type: 3}
   grassTall: {fileID: 2629273362490727053, guid: 6c10a661a754e1e4da25e195c8067dc1,
@@ -647,7 +648,7 @@ Light:
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
-    m_Resolution: 0
+    m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05

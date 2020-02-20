@@ -24,6 +24,8 @@ public class Generation : MonoBehaviour
     int currentYpos = 1;
     int MaxBlocksPerCell = 100;
 
+    public int currentBlock = 0;
+
     //biomes
     public GameObject grassPlain;
     public GameObject grassTall;
@@ -115,7 +117,7 @@ public class Generation : MonoBehaviour
         for (int i = 0; i < MaxBlocksPerCell; i++)
         {
             GenereteBiome(i);
-            float height = Random.Range(0.0f, 0.2f);
+            float height = Random.Range(0.0f, 1.0f);
 
             if (i % 10 == 0 || i == 0)
             {
@@ -160,7 +162,7 @@ public class Generation : MonoBehaviour
             currentXpos++;
         }
 
-        WorldGenerated = true;
+        //WorldGenerated = true;
     }
 
     // Start is called before the first frame update
@@ -174,11 +176,9 @@ public class Generation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!WorldGenerated)
-        {
-            for (int i = 0; i < TotalRows * TotalColumns; i ++)
+            if (currentBlock < TotalRows * TotalColumns && !WorldGenerated)
             {
-                if (i % TotalRows == 0)
+                if (currentBlock % TotalRows == 0)
                 {
                     currentZpos = 0;
                     CurrentRow++;
@@ -189,8 +189,8 @@ public class Generation : MonoBehaviour
                 SetRandomBiomes();
                 GenerateFreshCell();
                 CurrentCell++;
-
+                currentBlock++;
             }
-        }
+      
     }
 }
