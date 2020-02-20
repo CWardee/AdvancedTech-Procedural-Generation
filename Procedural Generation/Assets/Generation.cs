@@ -28,10 +28,13 @@ public class Generation : MonoBehaviour
 
     //biomes
     public GameObject grassPlain;
+    public GameObject grassSheep;
     public GameObject grassTall;
+    public GameObject grassRock;
     public GameObject mudPlain;
     public GameObject mudGrass;
     public GameObject grassFlowers;
+    public GameObject water;
     public GameObject mudTree;
     public GameObject rock1;
     public GameObject rock2;
@@ -65,47 +68,98 @@ public class Generation : MonoBehaviour
 
     void GenereteBiome(int x)
     {
-        int i = Random.Range(1, 3);
-        if(CurrentBiome == "Grassland")
+        int i = Random.Range(1, 4);
+        if (CurrentBiome == "Grassland")
         {
-            i = Random.Range(1, 3);
-            if (i < 2)
+            i = Random.Range(1, 6);
+            switch (i)
             {
-                BlockObjectArray[x] = grassPlain;
-            }
+                case 1:
+                    BlockObjectArray[x] = grassPlain;
+                    break;
 
-            else
-            {
-                BlockObjectArray[x] = grassTall;
+                case 2:
+                    BlockObjectArray[x] = grassTall;
+                    break;
+
+                case 3:
+                    BlockObjectArray[x] = grassSheep;
+                    break;
+
+                case 4:
+                    BlockObjectArray[x] = grassFlowers;
+                    break;
+
+                case 5:
+                    BlockObjectArray[x] = grassPlain;
+                    break;
+
+                default:
+                    BlockObjectArray[x] = grassPlain;
+                    break;
             }
         }
 
 
         else if (CurrentBiome == "Mudland")
         {
-            i = Random.Range(1, 3);
-            if (i < 2)
+            i = Random.Range(1, 6);
+            switch (i)
             {
-                BlockObjectArray[x] = mudPlain;
-            }
+                case 1:
+                    BlockObjectArray[x] = mudPlain;
+                    break;
 
-            else
-            {
-                BlockObjectArray[x] = mudGrass;
+                case 2:
+                    BlockObjectArray[x] = mudGrass;
+                    break;
+
+                case 3:
+                    BlockObjectArray[x] = grassPlain;
+                    break;
+
+                case 4:
+                    BlockObjectArray[x] = water;
+                    break;
+
+                case 5:
+                    BlockObjectArray[x] = new GameObject();
+                    break;
+
+                default:
+                    BlockObjectArray[x] = grassRock;
+                    break;
             }
         }
 
         else if(CurrentBiome == "Forest")
         {
-            i = Random.Range(1, 3);
-            if (i < 2)
+            i = Random.Range(1, 6);
+            switch (i)
             {
-                BlockObjectArray[x] = grassFlowers;
-            }
+                case 1:
+                    BlockObjectArray[x] = grassFlowers;
+                    break;
 
-            else
-            {
-                BlockObjectArray[x] = mudTree;
+                case 2:
+                    BlockObjectArray[x] = mudPlain;
+                    break;
+
+                case 3:
+                    BlockObjectArray[x] = mudTree;
+                    break;
+
+                case 4:
+                    BlockObjectArray[x] = mudPlain;
+                    break;
+
+                case 5:
+                    BlockObjectArray[x] = new GameObject();
+                    break;
+
+                default:
+                    BlockObjectArray[x] = mudGrass;
+                    break;
             }
         }
     }
@@ -117,7 +171,7 @@ public class Generation : MonoBehaviour
         for (int i = 0; i < MaxBlocksPerCell; i++)
         {
             GenereteBiome(i);
-            float height = Random.Range(0.0f, 1.0f);
+            float height = Random.Range(0.0f, 0.5f);
 
             if (i % 10 == 0 || i == 0)
             {
@@ -138,10 +192,15 @@ public class Generation : MonoBehaviour
             for (int x = 0; x < TotalHeight; x++)
             {
                 currentYpos--;
-                int z = Random.Range(1, 3);
+                int z = Random.Range(1, 5);
                 if (z < 2)
                 {
                     BlockObjectArray[i] = rock1;
+                }
+
+                else if (z > 2 && z < 4)
+                {
+                    BlockObjectArray[i] = new GameObject();
                 }
 
                 else

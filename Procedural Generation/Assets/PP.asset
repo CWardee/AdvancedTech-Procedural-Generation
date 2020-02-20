@@ -232,13 +232,13 @@ MonoBehaviour:
     value: 2
   aperture:
     overrideState: 1
-    value: 11
+    value: 10
   focalLength:
     overrideState: 1
-    value: 54
+    value: 48
   kernelSize:
     overrideState: 1
-    value: 0
+    value: 2
 --- !u!114 &3252075874242941517
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -359,7 +359,7 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: 0.2
   contrast:
     overrideState: 1
     value: -6
@@ -398,7 +398,7 @@ MonoBehaviour:
     value: {x: 0.9862738, y: 0.96609354, z: 1, w: 0.015105739}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.92674625, z: 0.7160975, w: -0.030211473}
+    value: {x: 1, y: 0.8832229, z: 0.7372614, w: -0.030211473}
   masterCurve:
     overrideState: 0
     value:
@@ -1644,7 +1644,7 @@ MonoBehaviour:
     value: 1
   colored:
     overrideState: 1
-    value: 0
+    value: 1
   intensity:
     overrideState: 1
     value: 0.032
@@ -1666,13 +1666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 0
+    value: -5
   intensityX:
     overrideState: 0
     value: 1

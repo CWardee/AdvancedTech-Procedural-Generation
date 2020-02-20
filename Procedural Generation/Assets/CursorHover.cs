@@ -35,11 +35,18 @@ public class CursorHover : MonoBehaviour
 
                 print(hit.collider.name);
 
+                ParticleSystem Particle = Instantiate(particlesToPlay, new Vector3(hit.collider.gameObject.transform.position.x, 
+                                                                                            hit.collider.gameObject.transform.position.y, 
+                                                                                            hit.collider.gameObject.transform.position.z), Quaternion.identity);
 
-                    particlesToPlay.transform.position = new Vector3(hit.collider.gameObject.transform.position.x,
-                                        hit.collider.gameObject.transform.position.y,
-                                        hit.collider.gameObject.transform.position.z);
-                    particlesToPlay.Play();
+
+
+
+
+                //particlesToPlay.transform.position = new Vector3(hit.collider.gameObject.transform.position.x,
+                //                        hit.collider.gameObject.transform.position.y,
+                //                        hit.collider.gameObject.transform.position.z);
+                Particle.Play();
 
                     Destroy(hit.collider.gameObject);
 
