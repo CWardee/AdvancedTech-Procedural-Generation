@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CursorHover : MonoBehaviour
 {
+    public LayerMask Mask;
     Ray ray;
     RaycastHit hit;
     ParticleSystem rockParticles;
@@ -30,11 +31,10 @@ public class CursorHover : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mask))
             {
 
                 print(hit.collider.name);
-
                 ParticleSystem Particle = Instantiate(particlesToPlay, new Vector3(hit.collider.gameObject.transform.position.x, 
                                                                                             hit.collider.gameObject.transform.position.y, 
                                                                                             hit.collider.gameObject.transform.position.z), Quaternion.identity);
@@ -49,9 +49,10 @@ public class CursorHover : MonoBehaviour
                 Particle.Play();
 
                     Destroy(hit.collider.gameObject);
+                }
 
 
-            }
+            
             }
 
         }

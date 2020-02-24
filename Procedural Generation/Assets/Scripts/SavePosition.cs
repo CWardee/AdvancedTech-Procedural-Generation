@@ -6,10 +6,8 @@ using UnityEngine;
 
 public class SavePosition
 {
-    public int totalNumOfBlocks;
     public string name;
     public GameObject currentGameObject;
-    public MeshFilter currentMesh;
     public float x;
     public float y;
     public float z;

@@ -22,7 +22,7 @@ public class Generation : MonoBehaviour
     int currentXpos = 0;
     int currentZpos = 0;
     int currentYpos = 1;
-    int MaxBlocksPerCell = 100;
+    public int MaxBlocksPerCell = 100;
 
     public int currentBlock = 0;
 
@@ -40,10 +40,16 @@ public class Generation : MonoBehaviour
     public GameObject rock2;
 
 
+    public GameObject playerCamera;
 
+
+    public GameObject CellObject;
     GameObject Cell;
 
     string CurrentBiome;
+
+    float CellX = 10;
+    float CellZ = 0;
 
     void SetRandomBiomes()
     {
@@ -119,11 +125,11 @@ public class Generation : MonoBehaviour
                     break;
 
                 case 4:
-                    BlockObjectArray[x] = water;
+                    BlockObjectArray[x] = grassPlain;
                     break;
 
                 case 5:
-                    BlockObjectArray[x] = new GameObject();
+                    BlockObjectArray[x] = grassPlain;
                     break;
 
                 default:
@@ -154,7 +160,7 @@ public class Generation : MonoBehaviour
                     break;
 
                 case 5:
-                    BlockObjectArray[x] = new GameObject();
+                    BlockObjectArray[x] = mudPlain;
                     break;
 
                 default:
@@ -200,7 +206,7 @@ public class Generation : MonoBehaviour
 
                 else if (z > 2 && z < 4)
                 {
-                    BlockObjectArray[i] = new GameObject();
+                    BlockObjectArray[i] = rock1;
                 }
 
                 else
@@ -229,27 +235,35 @@ public class Generation : MonoBehaviour
     {
         TotalCells = TotalRows * TotalColumns;
         BlockObjectArray = new GameObject[MaxBlocksPerCell];
-        CellParent = new GameObject();
     }
 
     // Update is called once per frame
     void Update()
     {
-            if (currentBlock < TotalRows * TotalColumns && !WorldGenerated)
+            if (currentBlock < TotalCells && !WorldGenerated)
             {
+
                 if (currentBlock % TotalRows == 0)
                 {
                     currentZpos = 0;
                     CurrentRow++;
-                }
+                    CellX += 10;
+                    CellZ = 0;
+            }
 
-                Cell = Instantiate(CellParent, new Vector3(), Quaternion.identity);
+
+                Cell = Instantiate(CellObject, new Vector3(0,0,0), Quaternion.identity);
+                Cell.transform.position = new Vector3(CellX - 5, 0, CellZ + 5);
                 Cell.name = "Cell Number: " + CurrentCell;
+
+                CellZ += 10;
+
+
+
                 SetRandomBiomes();
                 GenerateFreshCell();
                 CurrentCell++;
                 currentBlock++;
-            }
-      
+            }  
     }
 }

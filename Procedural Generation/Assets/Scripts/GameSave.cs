@@ -18,6 +18,8 @@ public class GameSave : MonoBehaviour
     public int MaxBlocks = 0;
     public GameObject[] blocksToSave;
 
+    public GameObject[] cellToSave;
+
 
     public void DeleteAll()
     {
@@ -79,16 +81,66 @@ public class GameSave : MonoBehaviour
                 blocksPostions.currentGameObject.transform.position = position;
 
 
-                // Instantiate(blocksToSave[i], new Vector3(positions[i].x + blocksPostions[i].y, blocksPostions[i].z), Quaternion.identity);
+                //Instantiate(blocksToSave[i], new Vector3(positions[i].x + blocksPostions[i].y, blocksPostions[i].z), Quaternion.identity);
             }
         }
 
     }
 
+    public void LoadCell()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Vector3 position = new Vector3();
+            string CellLocale = PlayerPrefs.GetString("CellLocation " + i);
+            SavePosition cellSave = JsonUtility.FromJson<SavePosition>(CellLocale);
 
 
+            if (cellSave != null && CellLocale.Length > 0)
+            {
+                cellSave = JsonUtility.FromJson<SavePosition>(CellLocale);
+                Instantiate(cellSave.currentGameObject);
+                cellSave.currentGameObject.name = i.ToString();
+                position = new Vector3();
 
-    public void SaveGame()
+                position.x = cellSave.x;
+                position.y = cellSave.y;
+                position.z = cellSave.z;
+                cellSave.currentGameObject.transform.position = position;
+
+
+                Instantiate(cellToSave[i], new Vector3(position.x + position.y, position.z), Quaternion.identity);
+            }
+        }
+    }
+
+
+    public void SaveCell()
+    {
+        for (int i = 0; i < MaxBlocks; i++)
+        {
+            cellToSave[i] = GameObject.Find("Cell Number: " + i);
+
+            if (cellToSave[i] == null)
+            {
+                cellToSave[i] = empty;
+            }
+
+            SavePosition cellSave = new SavePosition();
+            cellSave.currentGameObject = cellToSave[i];
+            cellSave.x = cellToSave[i].transform.position.x;
+            cellSave.y = cellToSave[i].transform.position.y;
+            cellSave.z = cellToSave[i].transform.position.z;
+
+
+            string CellsToJson = JsonUtility.ToJson(cellSave);
+            Debug.Log(CellsToJson);
+            PlayerPrefs.SetString("CellLocation " + i, CellsToJson);
+        }
+    }
+
+
+        public void SaveGame()
     {
 
 
@@ -157,19 +209,14 @@ public class GameSave : MonoBehaviour
             blocksPostions.x = blocksToSave[i].transform.position.x;
             blocksPostions.y = blocksToSave[i].transform.position.y;
             blocksPostions.z = blocksToSave[i].transform.position.z;
-            blocksPostions.totalNumOfBlocks = GlobalGeneration.total;
 
             string BlocksToJson = JsonUtility.ToJson(blocksPostions);
             Debug.Log(BlocksToJson);
             PlayerPrefs.SetString("BlocksLocation " + i, BlocksToJson);
 
             string ToJsonBlocks = JsonUtility.ToJson(s);
+
         }
-
-
-
-
-
 
         //for (int i = 0; i < GlobalGeneration.CurrentBlock.Length; i++)
         //{
@@ -187,6 +234,12 @@ public class GameSave : MonoBehaviour
         //    PlayerPrefs.SetString("BlocksLocation " + i, BlocksToJson);
         //}
     }
+
+
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
