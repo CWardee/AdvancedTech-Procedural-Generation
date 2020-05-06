@@ -31,7 +31,7 @@ public class CursorHover : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mask))
+            if (Physics.Raycast(ray, out hit, 5000, Mask))
             {
 
                 print(hit.collider.name);
